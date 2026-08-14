@@ -124,6 +124,50 @@ Each chain got one read. The endpoints come from
 [ethereum-lists/chains](https://github.com/ethereum-lists/chains), which publishes them for
 public use.
 
+## Does anyone actually hit this?
+
+A survey that stops at "55 chains can break this way" is a hypothesis, so I read every
+verified contract on one of them. Degen has 437 verified Solidity contracts. Twenty-six touch
+`block.number` or `blockhash`. Twenty of those are widely-deployed infrastructure that
+happens to live there — ERC-4337 EntryPoints, Multicall3, LayerZero's EndpointV2, Hyperlane's
+Mailbox, proxies. Six are applications someone deployed for this chain.
+
+Most of the uses are self-consistent and therefore fine. If a contract writes
+`block.number + N` and later compares it against `block.number`, both reads are the same
+clock and the logic works — it just means the deadline is denominated in the parent chain's
+blocks, which is a surprise rather than a bug. Breaking it needs a boundary: a block height
+that leaves the contract and gets compared against this chain's `eth_blockNumber`.
+
+One live contract crosses it. A MasterChef fork with 44,858 LP tokens and 276,196 DSWAP
+staked in it holds, right now:
+
+```
+pool 0  lastRewardBlock = 48,240,221
+pool 1  lastRewardBlock = 48,491,751
+Degen eth_blockNumber   = 26,961,445     <- the chain it is deployed on
+Base  eth_blockNumber   = 49,965,426     <- the number in its storage
+```
+
+That is not an inference, it is a storage read: the parent chain's height sitting in a Degen
+contract's state, twenty-one million blocks from anything Degen's own explorer will show you.
+Any dashboard that reads `lastRewardBlock` and interprets it against Degen's height is wrong
+by that much.
+
+The second consequence is less certain but larger. Rewards are **minted**, once per
+`block.number`, which means once per Base block (~2s) rather than once per Degen block (~75s
+measured). At `cubPerBlock = 0.001` that is 47.5 tokens a day instead of 1.27 — a factor of
+37.5, or 1.64%/yr against the current supply instead of 0.044%. Whether that is a bug depends
+on what the deployer intended, which I can't read off the chain. What I can say is that it is
+not the number Degen's block explorer would lead anyone to.
+
+And an honest negative, because it is the more common outcome: `IceCreamSwapBridge` on the
+same chain expires proposals on `block.number - proposedBlock > _expiry`, which is exactly
+the shape that breaks — except `_expiry` is set to 1,000,000,000 blocks, so the window is
+about sixty-three years either way and the skew cannot matter.
+
+So the trap is real, and on this chain it is rarely stepped in. That is the useful version of
+the finding: worth checking before you ship, not worth panicking about.
+
 ## Where this bites
 
 Anywhere an off-chain process compares a number a contract wrote against a number a node
