@@ -1,0 +1,679 @@
+[
+ {
+  "address": "0x000000000066093407b6704B89793beFfD0D8F00",
+  "name": "UniversalProfileInitPostDeploymentModule",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "contracts/LSP14Ownable2Step/LSP14Ownable2Step.sol",
+    180,
+    "uint256 currentBlock = block.number;"
+   ]
+  ]
+ },
+ {
+  "address": "0x0000000000Bf54A35f528D67c62145161B25C55C",
+  "name": "N2MERC721NS",
+  "kinds": [
+   "block.number",
+   "blockhash",
+   "knows-arbsys"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "contracts/N2MERC721NS/NSMinting.sol",
+    180,
+    "return block.prevrandao + block.timestamp + uint256(blockhash(block.number - 1)) + _currentIndex;"
+   ]
+  ]
+ },
+ {
+  "address": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+  "name": "EntryPoint",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 2,
+  "sample": [
+   [
+    "contracts/interfaces/IAccount.sol",
+    32,
+    "*                              Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ],
+   [
+    "contracts/interfaces/IPaymaster.sol",
+    36,
+    "*                          Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ]
+  ]
+ },
+ {
+  "address": "0x0000005aD606bcFEF9Ea6D0BbE5b79847054BcD7",
+  "name": "UniversalProfilePostDeploymentModule",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "contracts/LSP14Ownable2Step/LSP14Ownable2Step.sol",
+    180,
+    "uint256 currentBlock = block.number;"
+   ]
+  ]
+ },
+ {
+  "address": "0x000100abaad02f1cfC8Bbe32bD5a564817339E72",
+  "name": "CoinbaseSmartWallet",
+  "kinds": [
+   "block.number",
+   "knows-arbsys"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "lib/account-abstraction/contracts/interfaces/IAccount.sol",
+    30,
+    "*      Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ]
+  ]
+ },
+ {
+  "address": "0x071B36BcE6A1e1693A864B933275Fc3775FC7cC9",
+  "name": "TokenERC20",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 2,
+  "sample": [
+   [
+    "lib/openzeppelin-contracts-upgradeable/contracts/token/ERC20/extensions/ERC20VotesUpgradeable.sol",
+    50,
+    "return SafeCastUpgradeable.toUint48(block.number);"
+   ],
+   [
+    "lib/openzeppelin-contracts-upgradeable/contracts/token/ERC20/extensions/ERC20VotesUpgradeable.sol",
+    59,
+    "require(clock() == block.number, \"ERC20Votes: broken clock mode\");"
+   ]
+  ]
+ },
+ {
+  "address": "0x0BA5ED0c6AA8c49038F819E587E2633c4A9F428a",
+  "name": "CoinbaseSmartWalletFactory",
+  "kinds": [
+   "block.number",
+   "knows-arbsys"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "lib/account-abstraction/contracts/interfaces/IAccount.sol",
+    30,
+    "*      Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ]
+  ]
+ },
+ {
+  "address": "0x1a44076050125825900e736c501f859c50fE728c",
+  "name": "EndpointV2",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 6,
+  "sample": [
+   [
+    "contracts/MessageLibManager.sol",
+    127,
+    "// block.number is uint256 so timeout.expiry must > 0, which implies a non-ZERO value"
+   ],
+   [
+    "contracts/MessageLibManager.sol",
+    128,
+    "if (timeout.lib == _actualReceiveLib && timeout.expiry > block.number) {"
+   ],
+   [
+    "contracts/MessageLibManager.sol",
+    187,
+    "timeout.expiry = block.number + _gracePeriod;"
+   ],
+   [
+    "contracts/MessageLibManager.sol",
+    210,
+    "if (_expiry <= block.number) revert Errors.LZ_InvalidExpiry();"
+   ],
+   [
+    "contracts/MessageLibManager.sol",
+    266,
+    "Timeout memory timeout = Timeout({ lib: oldLib, expiry: block.number + _gracePeriod });"
+   ],
+   [
+    "contracts/MessageLibManager.sol",
+    296,
+    "if (_expiry <= block.number) revert Errors.LZ_InvalidExpiry();"
+   ]
+  ]
+ },
+ {
+  "address": "0x2f2aFaE1139Ce54feFC03593FeE8AB2aDF4a85A7",
+  "name": "TransparentUpgradeableProxy",
+  "kinds": [
+   "block.number",
+   "blockhash",
+   "emitted",
+   "knows-arbsys"
+  ],
+  "hits": 15,
+  "sample": [
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    221,
+    "uint248(block.number)"
+   ],
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    227,
+    "block.number,"
+   ],
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    273,
+    "block.number >="
+   ],
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    283,
+    "block.number"
+   ],
+   [
+    "contracts/Mailbox.sol",
+    219,
+    "blockNumber: uint48(block.number)"
+   ],
+   [
+    "contracts/test/TestSendReceiver.sol",
+    58,
+    "return blockhash(block.number - 1);"
+   ]
+  ]
+ },
+ {
+  "address": "0x3024D38EA2434BA6635003Dc1BDC0daB5882ED4F",
+  "name": "UniversalProfileInit",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "contracts/LSP14Ownable2Step/LSP14Ownable2Step.sol",
+    185,
+    "uint256 currentBlock = block.number;"
+   ]
+  ]
+ },
+ {
+  "address": "0x3D4440F335060a0341C9E6C3bBeE85E552505FFF",
+  "name": "IceCreamSwapBridge",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 3,
+  "sample": [
+   [
+    "<main>",
+    399,
+    "_proposedBlock: uint40(block.number) // Overflow is desired."
+   ],
+   [
+    "<main>",
+    403,
+    "} else if (uint40(block.number - proposal._proposedBlock) > _expiry) {"
+   ],
+   [
+    "<main>",
+    448,
+    "require(uint40(block.number - proposal._proposedBlock) > _expiry, \"not expired\");"
+   ]
+  ]
+ },
+ {
+  "address": "0x4D19de9408Ec93BC50b87d185365e52771Edf714",
+  "name": "Multicall3",
+  "kinds": [
+   "block.number",
+   "blockhash",
+   "knows-arbsys"
+  ],
+  "hits": 6,
+  "sample": [
+   [
+    "<main>",
+    42,
+    "blockNumber = block.number;"
+   ],
+   [
+    "<main>",
+    80,
+    "blockNumber = block.number;"
+   ],
+   [
+    "<main>",
+    81,
+    "blockHash = blockhash(block.number);"
+   ],
+   [
+    "<main>",
+    166,
+    "blockHash = blockhash(blockNumber);"
+   ],
+   [
+    "<main>",
+    171,
+    "blockNumber = block.number;"
+   ],
+   [
+    "<main>",
+    202,
+    "blockHash = blockhash(block.number - 1);"
+   ]
+  ]
+ },
+ {
+  "address": "0x4Ed7d626f1E96cD1C0401607Bf70D95243E3dEd1",
+  "name": "Mailbox",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 2,
+  "sample": [
+   [
+    "<main>",
+    219,
+    "blockNumber: uint48(block.number)"
+   ],
+   [
+    "contracts/libs/Indexed.sol",
+    8,
+    "deployedBlock = block.number;"
+   ]
+  ]
+ },
+ {
+  "address": "0x5304b5DbBfCe2fb40AE11Ed51E70699FC1F25fC9",
+  "name": "ArbMulticall2",
+  "kinds": [
+   "block.number",
+   "blockhash",
+   "knows-arbsys"
+  ],
+  "hits": 10,
+  "sample": [
+   [
+    "<main>",
+    29,
+    "blockNumber = block.number;"
+   ],
+   [
+    "<main>",
+    50,
+    "blockHash = blockhash(blockNumber);"
+   ],
+   [
+    "<main>",
+    54,
+    "blockNumber = block.number;"
+   ],
+   [
+    "<main>",
+    78,
+    "blockHash = blockhash(block.number - 1);"
+   ],
+   [
+    "<main>",
+    124,
+    "blockNumber = block.number;"
+   ],
+   [
+    "<main>",
+    125,
+    "blockHash = blockhash(block.number);"
+   ]
+  ]
+ },
+ {
+  "address": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+  "name": "EntryPoint",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 2,
+  "sample": [
+   [
+    "contracts/interfaces/IAccount.sol",
+    30,
+    "*      Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ],
+   [
+    "contracts/interfaces/IPaymaster.sol",
+    34,
+    "*      Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ]
+  ]
+ },
+ {
+  "address": "0x644f250d0890F8c6986aDbCC3f9E7D925903529b",
+  "name": "RockPaperScissors",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "<main>",
+    80,
+    "block.number,"
+   ]
+  ]
+ },
+ {
+  "address": "0x72eeFC6dDa79f2D79A5B46BC1BBa5c7b4bc80C0a",
+  "name": "Account",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 2,
+  "sample": [
+   [
+    "contracts/prebuilts/account/interface/IAccount.sol",
+    29,
+    "*      Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ],
+   [
+    "contracts/prebuilts/account/utils/BaseAccount.sol",
+    71,
+    "*      Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ]
+  ]
+ },
+ {
+  "address": "0x77722fa8a43DFcC3E01C1dB0b150b9Db9d1e53dd",
+  "name": "DegenDog",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "@openzeppelin/contracts/utils/types/Time.sol",
+    34,
+    "return SafeCast.toUint48(block.number);"
+   ]
+  ]
+ },
+ {
+  "address": "0x777777777777AeC03fd955926DbF81597e66834C",
+  "name": "SingletonPaymasterV7",
+  "kinds": [
+   "block.number",
+   "knows-arbsys"
+  ],
+  "hits": 2,
+  "sample": [
+   [
+    "lib/account-abstraction-v6/contracts/interfaces/IPaymaster.sol",
+    34,
+    "*      Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ],
+   [
+    "src/interfaces/IPaymasterV7.sol",
+    29,
+    "*                          Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ]
+  ]
+ },
+ {
+  "address": "0x9c0dF4b950ca19Db6fEC13ab79aD180a9C15a41E",
+  "name": "SwapRouter02",
+  "kinds": [
+   "block.number",
+   "blockhash"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "repos/swap-router-contracts/contracts/base/PeripheryValidationExtended.sol",
+    8,
+    "require(blockhash(block.number - 1) == previousBlockhash, 'Blockhash');"
+   ]
+  ]
+ },
+ {
+  "address": "0xBD0334AC7FADA28CcD27Fa09838e9EA4c39117Db",
+  "name": "VerifyingPaymasterV7",
+  "kinds": [
+   "block.number",
+   "knows-arbsys"
+  ],
+  "hits": 1,
+  "sample": [
+   [
+    "lib/account-abstraction-v0.7/contracts/interfaces/IPaymaster.sol",
+    36,
+    "*                          Note that the validation code cannot use block.timestamp (or block.number) directly."
+   ]
+  ]
+ },
+ {
+  "address": "0xECF3365559FfE5fdBE1953df0A01244e234e4453",
+  "name": "OnChainCounter",
+  "kinds": [
+   "block.number",
+   "emitted"
+  ],
+  "hits": 11,
+  "sample": [
+   [
+    "<main>",
+    114,
+    "emit CounterIncremented(msg.sender, counter, block.timestamp, block.number);"
+   ],
+   [
+    "<main>",
+    130,
+    "emit BatchSettingsUpdated(oldMaxBatch, newMaxBatch, oldChunkSize, newChunkSize, block.number);"
+   ],
+   [
+    "<main>",
+    164,
+    "emit BatchOperation(msg.sender, uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, times))), startCount, counter, times, block.timestamp, block.number);"
+   ],
+   [
+    "<main>",
+    193,
+    "emit BatchOperation(msg.sender, uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, processedCount))), startCount, counter, processedCount, block.timestamp, block.number);"
+   ],
+   [
+    "<main>",
+    213,
+    "stats.lastUpdateBlock = block.number;"
+   ],
+   [
+    "<main>",
+    218,
+    "stats.lastUpdateBlock = block.number;"
+   ]
+  ]
+ },
+ {
+  "address": "0xEb9FcFDC9EfDC17c1EC5E1dc085B98485da213D6",
+  "name": "StaticAggregationHookFactory",
+  "kinds": [
+   "block.number",
+   "blockhash",
+   "emitted",
+   "knows-arbsys"
+  ],
+  "hits": 15,
+  "sample": [
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    221,
+    "uint248(block.number)"
+   ],
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    227,
+    "block.number,"
+   ],
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    273,
+    "block.number >="
+   ],
+   [
+    "contracts/avs/HyperlaneServiceManager.sol",
+    283,
+    "block.number"
+   ],
+   [
+    "contracts/Mailbox.sol",
+    219,
+    "blockNumber: uint48(block.number)"
+   ],
+   [
+    "contracts/test/TestSendReceiver.sol",
+    58,
+    "return blockhash(block.number - 1);"
+   ]
+  ]
+ },
+ {
+  "address": "0xF058Eb3C946F0eaeCa3e6662300cb01165c64edE",
+  "name": "ClonableBeaconProxy",
+  "kinds": [
+   "block.number",
+   "blockhash",
+   "knows-arbsys"
+  ],
+  "hits": 10,
+  "sample": [
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    29,
+    "blockNumber = block.number;"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    50,
+    "blockHash = blockhash(blockNumber);"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    54,
+    "blockNumber = block.number;"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    78,
+    "blockHash = blockhash(block.number - 1);"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    124,
+    "blockNumber = block.number;"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    125,
+    "blockHash = blockhash(block.number);"
+   ]
+  ]
+ },
+ {
+  "address": "0xc38292bebBbF691FC3d2733f17E529e6405Bd9d6",
+  "name": "ClonableBeaconProxy",
+  "kinds": [
+   "block.number",
+   "blockhash",
+   "knows-arbsys"
+  ],
+  "hits": 10,
+  "sample": [
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    29,
+    "blockNumber = block.number;"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    50,
+    "blockHash = blockhash(blockNumber);"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    54,
+    "blockNumber = block.number;"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    78,
+    "blockHash = blockhash(block.number - 1);"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    124,
+    "blockNumber = block.number;"
+   ],
+   [
+    "contracts/rpc-utils/MulticallV2.sol",
+    125,
+    "blockHash = blockhash(block.number);"
+   ]
+  ]
+ },
+ {
+  "address": "0xe3584Ce2A3f7c2983B45eb3D37CD959c8587bd87",
+  "name": "MasterChef",
+  "kinds": [
+   "block.number"
+  ],
+  "hits": 9,
+  "sample": [
+   [
+    "<main>",
+    1085,
+    "require(blockNumber < block.number, \"cub::getPriorVotes: not yet determined\");"
+   ],
+   [
+    "<main>",
+    1152,
+    "uint32 blockNumber = safe32(block.number, \"cub::_writeCheckpoint: block number exceeds 32 bits\");"
+   ],
+   [
+    "<main>",
+    1265,
+    "uint256 lastRewardBlock = block.number > startBlock ? block.number : startBlock;"
+   ],
+   [
+    "<main>",
+    1298,
+    "if (block.number > pool.lastRewardBlock && lpSupply != 0) {"
+   ],
+   [
+    "<main>",
+    1299,
+    "uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);"
+   ],
+   [
+    "<main>",
+    1317,
+    "if (block.number <= pool.lastRewardBlock) {"
+   ]
+  ]
+ }
+]

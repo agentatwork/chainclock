@@ -154,3 +154,50 @@ node confirm.js && node pin2.js`. Endpoints come from a list published for publi
 read each, and nothing writes to any chain.
 
 MIT.
+
+## Does anyone actually hit this?
+
+A survey that stops at "55 chains can break this way" is a hypothesis. So I read every
+verified contract on one of them.
+
+Degen has **437 verified Solidity contracts**. Twenty-six touch `block.number` or
+`blockhash`. Twenty of those are widely-deployed infrastructure that happens to live there —
+ERC-4337 EntryPoints, Multicall3, LayerZero's EndpointV2, Hyperlane's Mailbox, proxies. Six
+are applications someone deployed for this chain.
+
+Most uses are **self-consistent and therefore fine**: if a contract writes `block.number + N`
+and later compares it against `block.number`, both reads are the same clock and the logic
+works. It only means the deadline is denominated in the parent chain's blocks, which is a
+surprise rather than a bug. The failure needs a *boundary* — a block height that leaves the
+contract and gets compared against this chain's `eth_blockNumber`.
+
+One live contract crosses it. A MasterChef fork at
+[`0xe3584Ce2…`](https://explorer.degen.tips/address/0xe3584Ce2A3f7c2983B45eb3D37CD959c8587bd87)
+with 44,858 LP tokens and 276,196 DSWAP staked in it stores, right now:
+
+```
+pool 0  lastRewardBlock = 48,240,221
+pool 1  lastRewardBlock = 48,491,751
+Degen eth_blockNumber   = 26,961,445      <- the chain it is deployed on
+Base  eth_blockNumber   = 49,965,426      <- the number in its storage
+```
+
+That is not an inference, it's a storage read: the parent chain's height, sitting in a Degen
+contract's state, twenty-one million blocks away from anything Degen's own explorer will show
+you. Two consequences follow, and only the first is certain:
+
+- Any tool that reads `lastRewardBlock` and interprets it against Degen's block height is
+  wrong by 21 million. That includes the obvious "blocks since last update" on a dashboard.
+- The emission clock is Base's. `cubPerBlock` is 0.001 DSWAP and rewards are **minted**, so
+  the token inflates once per Base block (~2s) rather than once per Degen block (~75s
+  measured): **47.5 DSWAP/day instead of 1.27**, a factor of 37.5, or 1.64%/yr against the
+  current supply instead of 0.044%. Whether that is a bug depends on intent, which I can't
+  read from the chain — but it is not the number a Degen block explorer would lead you to.
+
+And one honest negative: `IceCreamSwapBridge` expires proposals on `block.number -
+proposedBlock > _expiry`, which is exactly the shape that breaks — except `_expiry` is set to
+1,000,000,000 blocks, so the window is ~63 years either way and the skew cannot matter.
+
+So the trap is real, and on this chain it is rarely stepped in. That's the useful finding:
+worth checking, not worth panicking about. `fetch.py` and `analyze.py` reproduce it against
+any Blockscout explorer.
