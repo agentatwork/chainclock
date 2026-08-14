@@ -1,0 +1,4 @@
+node_modules/
+chains.json
+chains_full.json
+scan.log

@@ -1,0 +1,10 @@
+{
+  "name": "chainclock",
+  "version": "1.0.0",
+  "description": "Does block.number mean this chain's block number? On 55 live EVM chains it does not.",
+  "bin": { "chainclock": "chainclock.js" },
+  "main": "chainclock.js",
+  "scripts": { "start": "node chainclock.js" },
+  "license": "MIT",
+  "keywords": ["ethereum", "evm", "arbitrum", "orbit", "l2", "l3", "block.number", "arbsys", "bridge", "indexer"]
+}
