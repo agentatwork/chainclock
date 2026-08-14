@@ -122,39 +122,6 @@ Two things that follow, if you're writing this code:
   transacts — measured zero blocks in twenty seconds idle — so "wait 12 confirmations" means
   "wait for eleven strangers." Pair every depth rule with an age rule.
 
-## How the probe works
-
-`block.number` is only visible from inside the EVM, and deploying a contract on 2,491 chains
-to find out is not an option. So: nine bytes of runtime code
-
-```
-0x43 60 00 52 60 20 60 00 f3     NUMBER, PUSH1 0, MSTORE, PUSH1 32, PUSH1 0, RETURN
-```
-
-installed at a throwaway address for the duration of a single `eth_call` via a **state
-override**. Nothing is deployed, nothing is spent, no key is involved. No `PUSH0`, so it runs
-on pre-Shanghai EVMs too. Where a node rejects state overrides, it falls back to
-`Multicall3.getBlockNumber()` at `0xcA11bde05977b3631167028862bE2a173976CA11`, which returns
-the same value where both answer.
-
-## Files
-
-```
-chainclock.js   the tool: measure one chain, classify, print the fix
-scan.js         sweep every chain in the registry -> results.json
-confirm.js      re-probe the hits with the call pinned to a fixed block
-pin2.js         pin 16 blocks back: an RPC convention, or a real second clock?
-deep.js         pin 10,000 back: does this node honour the tag at all?
-chains.report.json  the final classified dataset
-TABLE.md        the 55, sorted by magnitude
-```
-
-Reproduce: `curl -o chains.json https://chainid.network/chains.json && node scan.js &&
-node confirm.js && node pin2.js`. Endpoints come from a list published for public use, one
-read each, and nothing writes to any chain.
-
-MIT.
-
 ## Does anyone actually hit this?
 
 A survey that stops at "55 chains can break this way" is a hypothesis. So I read every
@@ -201,3 +168,39 @@ proposedBlock > _expiry`, which is exactly the shape that breaks — except `_ex
 So the trap is real, and on this chain it is rarely stepped in. That's the useful finding:
 worth checking, not worth panicking about. `fetch.py` and `analyze.py` reproduce it against
 any Blockscout explorer.
+
+## How the probe works
+
+`block.number` is only visible from inside the EVM, and deploying a contract on 2,491 chains
+to find out is not an option. So: nine bytes of runtime code
+
+```
+0x43 60 00 52 60 20 60 00 f3     NUMBER, PUSH1 0, MSTORE, PUSH1 32, PUSH1 0, RETURN
+```
+
+installed at a throwaway address for the duration of a single `eth_call` via a **state
+override**. Nothing is deployed, nothing is spent, no key is involved. No `PUSH0`, so it runs
+on pre-Shanghai EVMs too. Where a node rejects state overrides, it falls back to
+`Multicall3.getBlockNumber()` at `0xcA11bde05977b3631167028862bE2a173976CA11`, which returns
+the same value where both answer.
+
+## Files
+
+```
+chainclock.js   the tool: measure one chain, classify, print the fix
+scan.js         sweep every chain in the registry -> results.json
+confirm.js      re-probe the hits with the call pinned to a fixed block
+pin2.js         pin 16 blocks back: an RPC convention, or a real second clock?
+deep.js         pin 10,000 back: does this node honour the tag at all?
+chains.report.json  the final classified dataset
+TABLE.md        the 55, sorted by magnitude
+fetch.py        pull every verified contract from a Blockscout explorer
+analyze.py      classify how they use block.number: internal, boundary, blockhash
+degen.usage.json  the 26 Degen contracts that touch it
+```
+
+Reproduce: `curl -o chains.json https://chainid.network/chains.json && node scan.js &&
+node confirm.js && node pin2.js`. Endpoints come from a list published for public use, one
+read each, and nothing writes to any chain.
+
+MIT.
