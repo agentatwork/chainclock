@@ -1,0 +1,55 @@
+  0 head=26962464 block.number=49995631 arbBlockNumber=26962464 skew=23033167
+  1 head=26962464 block.number=49995631 arbBlockNumber=26962464 skew=23033167
+      over   15.4s: head   0.000 blk/s   block.number   0.000 blk/s   arbBlockNumber   0.000 blk/s
+  2 head=26962465 block.number=49995729 arbBlockNumber=26962465 skew=23033264
+      over   30.8s: head   0.033 blk/s   block.number   3.187 blk/s   arbBlockNumber   0.033 blk/s
+  3 head=26962465 block.number=49995729 arbBlockNumber=26962465 skew=23033264
+      over   46.2s: head   0.022 blk/s   block.number   2.121 blk/s   arbBlockNumber   0.022 blk/s
+  4 head=26962465 block.number=49995729 arbBlockNumber=26962465 skew=23033264
+      over   61.6s: head   0.016 blk/s   block.number   1.592 blk/s   arbBlockNumber   0.016 blk/s
+  5 head=26962465 block.number=49995729 arbBlockNumber=26962465 skew=23033264
+      over   76.9s: head   0.013 blk/s   block.number   1.274 blk/s   arbBlockNumber   0.013 blk/s
+  6 head=26962465 block.number=49995729 arbBlockNumber=26962465 skew=23033264
+      over   92.3s: head   0.011 blk/s   block.number   1.062 blk/s   arbBlockNumber   0.011 blk/s
+  7 head=26962465 block.number=49995729 arbBlockNumber=26962465 skew=23033264
+      over  107.7s: head   0.009 blk/s   block.number   0.910 blk/s   arbBlockNumber   0.009 blk/s
+  8 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  123.1s: head   0.032 blk/s   block.number   1.161 blk/s   arbBlockNumber   0.032 blk/s
+  9 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  138.5s: head   0.029 blk/s   block.number   1.032 blk/s   arbBlockNumber   0.029 blk/s
+ 10 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  153.9s: head   0.026 blk/s   block.number   0.929 blk/s   arbBlockNumber   0.026 blk/s
+ 11 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  169.3s: head   0.024 blk/s   block.number   0.845 blk/s   arbBlockNumber   0.024 blk/s
+ 12 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  184.7s: head   0.022 blk/s   block.number   0.774 blk/s   arbBlockNumber   0.022 blk/s
+ 13 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  200.1s: head   0.020 blk/s   block.number   0.715 blk/s   arbBlockNumber   0.020 blk/s
+ 14 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  215.4s: head   0.019 blk/s   block.number   0.664 blk/s   arbBlockNumber   0.019 blk/s
+ 15 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  230.8s: head   0.017 blk/s   block.number   0.620 blk/s   arbBlockNumber   0.017 blk/s
+ 16 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  246.2s: head   0.016 blk/s   block.number   0.581 blk/s   arbBlockNumber   0.016 blk/s
+ 17 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  261.5s: head   0.015 blk/s   block.number   0.547 blk/s   arbBlockNumber   0.015 blk/s
+ 18 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  276.9s: head   0.014 blk/s   block.number   0.516 blk/s   arbBlockNumber   0.014 blk/s
+ 19 head=26962468 block.number=49995774 arbBlockNumber=26962468 skew=23033306
+      over  292.4s: head   0.014 blk/s   block.number   0.489 blk/s   arbBlockNumber   0.014 blk/s
+ 20 head=26962469 block.number=49995864 arbBlockNumber=26962469 skew=23033395
+      over  307.9s: head   0.016 blk/s   block.number   0.757 blk/s   arbBlockNumber   0.016 blk/s
+ 21 head=26962470 block.number=49995879 arbBlockNumber=26962470 skew=23033409
+      over  323.3s: head   0.019 blk/s   block.number   0.767 blk/s   arbBlockNumber   0.019 blk/s
+ 22 head=26962470 block.number=49995879 arbBlockNumber=26962470 skew=23033409
+      over  338.7s: head   0.018 blk/s   block.number   0.732 blk/s   arbBlockNumber   0.018 blk/s
+ 23 head=26962470 block.number=49995879 arbBlockNumber=26962470 skew=23033409
+      over  354.2s: head   0.017 blk/s   block.number   0.700 blk/s   arbBlockNumber   0.017 blk/s
+ 24 head=26962470 block.number=49995879 arbBlockNumber=26962470 skew=23033409
+      over  369.6s: head   0.016 blk/s   block.number   0.671 blk/s   arbBlockNumber   0.016 blk/s
+
+WINDOW 369.6s
+  true local height   0.0162 blocks/s
+  block.number        0.6710 blocks/s
+  ArbSys.arbBlockNumber 0.0162 blocks/s
+  RATIO block.number : local = 41.333
