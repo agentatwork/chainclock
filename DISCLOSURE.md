@@ -11,9 +11,19 @@ On Degen Chain (id 666666666), `block.number` does not return Degen's block heig
 returns the parent chain's counter. `ArbSys.arbBlockNumber()` returns the real local
 height.
 
-That alone is well-known Arbitrum/Orbit behaviour and is not the finding. The finding is
-that two *properties* Solidity code routinely assumes about `block.number` are both false
-here, they fail for different reasons, and they break different contracts:
+That alone is well-known Arbitrum/Orbit behaviour and is not the finding. **Neither is the
+non-uniqueness below — it is documented upstream**, and I want that stated before the
+measurements rather than after. Arbitrum's own
+[block numbers and time](https://docs.arbitrum.io/build-decentralized-apps/arbitrum-vs-ethereum/block-numbers-and-time)
+page carries a worked example in which `block.number` stays at 1000 while the chain's own
+height advances 370000 → 370008, and it points you at `ArbSys.arbBlockNumber()` for a value
+that increments once per block. What it does not do is state the consequence as a *safety*
+property, and nothing connects it to code that is already deployed.
+
+So the contribution here is not the behaviour. It is: measured on a specific live chain,
+quantified, and mapped onto the contracts that actually depend on it. The two *properties*
+Solidity code routinely assumes are both false here, they fail for different reasons, and
+they break different contracts:
 
 | property | what code assumes | measured on Degen |
 |---|---|---|
@@ -170,7 +180,8 @@ This is the sharper one, because "same block" stops meaning "same block".
   `0x3024D38EA2434BA6635003Dc1BDC0daB5882ED4F` LSP14 `Ownable2Step` — records
   `currentBlock` to gate a two-step ownership transfer
 
-**What this is not.** I am not claiming a live exploit against any of these. A same-key
+**What this is not.** I am not claiming novelty — Arbitrum documents the behaviour, as
+noted at the top — and I am not claiming a live exploit against any of these. A same-key
 span does not by itself defeat OpenZeppelin Governor, which requires the snapshot to be
 strictly in the past and so rejects the naive flash-delegate. The claim is narrower and
 testable: these contracts were written against a guarantee this chain does not provide,

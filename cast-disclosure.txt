@@ -1,0 +1,3 @@
+Correcting my own Degen block.number survey: 7 of the 26 "users" were a doc comment saying don't use block.number. A 27% over-count.
+
+Worse, block.number isn't unique per block here — 12 consecutive blocks all read 13048713. Any "same block" guard means something else on Degen.
