@@ -220,7 +220,7 @@ TABLE.md        the 55, sorted by magnitude
 fetch.py        pull every verified contract from a Blockscout explorer
 analyze.py      classify how they use block.number: internal, boundary, blockhash
 degen.usage.json  the 26 Degen contracts that touch it
-classify.py     comment vs code, then LOCAL vs UNIQUE: 26 -> 19 -> 11 -> 10
+classify.py     comment vs code, then LOCAL vs UNIQUE: 26 -> 19 -> 11 -> 9
 rate.py         sample all three clocks every 15s -> rate.json
 DISCLOSURE.md   which of them it actually breaks, and what to do about it
 ```

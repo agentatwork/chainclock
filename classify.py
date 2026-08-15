@@ -80,6 +80,13 @@ DISCLOSABLE = {"duration", "identity"}
 NOT_MATERIAL = {
     "0x3D4440F335060a0341C9E6C3bBeE85E552505FFF":
         "_expiry is 1e9 blocks -- the deadline cannot be reached on any clock",
+    # Cleared 2026-08-15 by reading the chain rather than the source. The grace-period
+    # pattern is real, but it only bites once a receive-library timeout is actually set,
+    # and none is: lz.py walked all 148 eids this endpoint reports as supported and every
+    # defaultReceiveLibraryTimeout came back expiry 0. Dormant code cannot be affected.
+    "0x1a44076050125825900e736c501f859c50fE728c":
+        "LayerZero EndpointV2: 148/148 supported eids have timeout expiry 0 (lz.py) -- "
+        "the grace-period path is never entered on this chain",
 }
 
 

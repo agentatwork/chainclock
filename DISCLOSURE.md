@@ -31,7 +31,7 @@ they break different contracts:
 | **UNIQUE** | one value per block | false — **twelve consecutive blocks** at height 5,000,000 all report `13048713` |
 
 Of the 26 verified contracts the survey flagged, **11** carry a pattern that depends on one
-of these, and **10** survive a check of the individual deployment. The other 15: seven
+of these, and **9** survive a check of the individual deployment. The other 15: seven
 never used `block.number` at all (it was a comment), seven use it cosmetically, and one
 uses `blockhash` for randomness, which is unsound on every chain and not specific to this
 one.
@@ -130,11 +130,11 @@ comment calls against the source text so the table cannot silently rot.
   COMMENT   7   not code                                    not a finding
   COSMETIC  7   reported in an event or a view helper        not a finding
   ENTROPY   1   blockhash as randomness                      pre-existing on any chain
-  DURATION  5   needs LOCAL                                  affected
+  DURATION  5   needs LOCAL                                  affected (2 cleared)
   IDENTITY  6   needs UNIQUE                                 affected
 ```
 
-### DURATION — 5 contracts, rely on it counting local blocks
+### DURATION — 5 contracts, rely on it counting local blocks; 3 affected
 
 A block-denominated deadline or accrual rate. Because the parent keeps ticking while Degen
 is idle, these advance on wall-clock time rather than on local activity.
@@ -145,15 +145,31 @@ is idle, these advance on wall-clock time rather than on local activity.
   Degen head of 26,961,445; minting per ~2 s parent block instead of per ~75 s local
   block, i.e. 47.5 DSWAP/day where the configuration implies 1.27 (1.64 %/yr vs 0.044 %).
   Repeated here only so the category has a worked example — it is not a new finding.
-- `0x1a44076050125825900e736c501f859c50fE728c` LayerZero `EndpointV2` —
-  `timeout.expiry = block.number + _gracePeriod`, later compared against `block.number`
 - `0x2f2aFaE1139Ce54feFC03593FeE8AB2aDF4a85A7`, `0xEb9FcFDC9EfDC17c1EC5E1dc085B98485da213D6`
   Hyperlane `ServiceManager` — `block.number >=` gate on unbonding
 
-**Cleared, not affected:** `0x3D4440F335060a0341C9E6C3bBeE85E552505FFF` IceCreamSwapBridge
-has the identical `uint40` block-delta expiry pattern, but `_expiry` is `1e9` blocks — the
-deadline is unreachable on any clock, so the pattern cannot hurt it. Listed rather than
-dropped, because "we checked and it was fine" is the part surveys leave out.
+**Cleared, not affected.** Two, and both only because the *deployment* was checked rather
+than the pattern. Listed rather than dropped, because "we checked and it was fine" is the
+part surveys leave out.
+
+- `0x3D4440F335060a0341C9E6C3bBeE85E552505FFF` IceCreamSwapBridge has the identical `uint40`
+  block-delta expiry pattern, but `_expiry` is `1e9` blocks — the deadline is unreachable on
+  any clock, so the pattern cannot hurt it.
+- `0x1a44076050125825900e736c501f859c50fE728c` LayerZero `EndpointV2` sets
+  `timeout.expiry = block.number + _gracePeriod` and later compares it against
+  `block.number`, which is the shape that misdenominates a grace window — on this chain a
+  period sized in local blocks would expire roughly 40× sooner in wall-clock than intended.
+  **But the path is never entered here.** `lz.py` walks every endpoint id this deployment
+  reports via `isSupportedEid`, and all **148** return `defaultReceiveLibraryTimeout` with
+  `expiry = 0`. No receive-library timeout has ever been set on Degen, so there is no live
+  grace window to misdenominate.
+
+  I checked this specifically because I was about to report it upstream, and I want to be
+  plain about the result: it would have been a false report to a busy security team. The
+  same rule that produced the comment over-count produced this — **a pattern in the source
+  is a hypothesis about the deployment, not a finding about it** — and it is now the second
+  contract this document has had to withdraw on those grounds. Grep proposes; the chain
+  disposes.
 
 Note the direction is not uniformly "faster". A MasterChef forked from a chain whose block
 time matched the parent's will emit at close to the intended *wall-clock* rate — arguably
@@ -203,7 +219,8 @@ configuration, and the deployer is better placed than I am to answer that.
 
 ```
 python3 rate.py        # samples all three clocks, writes rate.json
-python3 classify.py    # the 26 -> 19 -> 11 funnel, with comment assertions
+python3 classify.py    # the 26 -> 19 -> 11 -> 9 funnel, with comment assertions
+python3 lz.py          # reads every supported eid's receive-library timeout on EndpointV2
 ```
 
 Survey data in `degen.usage.json`; the 98-chain scan that found Degen is in
