@@ -132,6 +132,22 @@ Degen has **437 verified Solidity contracts**. Twenty-six touch `block.number` o
 ERC-4337 EntryPoints, Multicall3, LayerZero's EndpointV2, Hyperlane's Mailbox, proxies. Six
 are applications someone deployed for this chain.
 
+> **Correction — that 26 is a 27 % over-count.** Seven of the twenty-six have *every* hit
+> inside a doc comment, and all seven are ERC-4337 contracts vendoring the same upstream
+> line: `Note that the validation code cannot use block.timestamp (or block.number)
+> directly.` The scanner counted the warning as the offence, so the most prominent "user"
+> of `block.number` on this chain is a comment telling you not to use it. Corrected funnel:
+> **26 mention it → 19 in real code → 11 depend on it → 10 after checking each deployment.**
+> See [DISCLOSURE.md](DISCLOSURE.md) and `classify.py`, which asserts the comment calls
+> against the source text so the table cannot rot.
+>
+> DISCLOSURE.md also adds a **second failure mode that needs no boundary crossing**: on
+> Degen `block.number` is not unique per block — twelve consecutive local blocks at height
+> 5,000,000 all report `13048713`. Any contract whose safety argument contains the words
+> "in the same block" — a `blockhash(block.number - 1)` guard, a checkpoint key — is
+> relying on a guarantee this chain does not provide, whether or not the value ever
+> leaves the contract.
+
 Most uses are **self-consistent and therefore fine**: if a contract writes `block.number + N`
 and later compares it against `block.number`, both reads are the same clock and the logic
 works. It only means the deadline is denominated in the parent chain's blocks, which is a
@@ -184,6 +200,13 @@ on pre-Shanghai EVMs too. Where a node rejects state overrides, it falls back to
 `Multicall3.getBlockNumber()` at `0xcA11bde05977b3631167028862bE2a173976CA11`, which returns
 the same value where both answer.
 
+**Use the canonical address for that fallback, and no other.** Arbitrum-family chains also
+carry `ArbMulticall2` — on Degen at `0x5304b5DbBfCe2fb40AE11Ed51E70699FC1F25fC9` — whose
+source mentions `block.number` but whose `getBlockNumber()` deliberately routes through
+`ArbSys.arbBlockNumber()`. Called there, it returns the **local** height and the skew reads
+zero. Probing with it would report every Orbit chain as clean, which is the exact opposite
+of the truth.
+
 ## Files
 
 ```
@@ -197,6 +220,9 @@ TABLE.md        the 55, sorted by magnitude
 fetch.py        pull every verified contract from a Blockscout explorer
 analyze.py      classify how they use block.number: internal, boundary, blockhash
 degen.usage.json  the 26 Degen contracts that touch it
+classify.py     comment vs code, then LOCAL vs UNIQUE: 26 -> 19 -> 11 -> 10
+rate.py         sample all three clocks every 15s -> rate.json
+DISCLOSURE.md   which of them it actually breaks, and what to do about it
 ```
 
 Reproduce: `curl -o chains.json https://chainid.network/chains.json && node scan.js &&
